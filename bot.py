@@ -71,9 +71,7 @@ def main(account, debug=False):
     svg_url += "&".join(args)
     text_url += "&".join(args)
     # download SVG
-    opener = urllib.request.FancyURLopener({})
-    f = opener.open(svg_url)
-    svg = f.read()
+    svg = urllib.request.urlopen(svg_url).read()
     # convert SVG to PNG
     png = cairosvg.svg2png(bytestring=svg)
     # create the status text
