@@ -24,7 +24,7 @@ import getopt
 import os
 import re
 
-def login(account, scopes = ['read', 'write']):
+def login(account):
     """
     Login to your Mastodon account
     """
