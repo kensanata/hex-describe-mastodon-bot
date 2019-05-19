@@ -58,6 +58,7 @@ def main(account, debug=False):
     seed = random.randint(0, 2**32)
     svg_url = "https://campaignwiki.org/text-mapper/alpine/random?"
     text_url = "https://campaignwiki.org/text-mapper/alpine/random/text?"
+    app_url = "https://campaignwiki.org/hex-describe"
     desc_url = "https://campaignwiki.org/hex-describe/describe/random/alpine?"
     args = ["seed=%d" % seed];
     if random.random() > 0.6:
@@ -75,9 +76,15 @@ def main(account, debug=False):
     # convert SVG to PNG
     png = cairosvg.svg2png(bytestring=svg)
     # create the status text
-    text = ("Here's a new alpine mini-setting for your next hex crawl campaign! "
-            + desc_url + "url=" + urllib.parse.quote(text_url)
+    text = ("Here's a new alpine mini-setting for your next hex crawl campaign!\n"
+            + desc_url + "url=" + urllib.parse.quote(text_url) + "\n"
+            + "Learn about the web app and the tables used to generate it all:\n"
+            + app_url + "\n"
             + "#hexdescribe #hex #hexcrawl #map #rpg")
+    # abort now if debugging
+    if debug:
+        print(text)
+        sys.exit(0)
     # upload image
     media = mastodon.media_post(png, mime_type="image/png", description="a hex map")
     # post status
