@@ -78,9 +78,9 @@ def main(account, debug=False):
     # create the status text
     text = ("Here's a new alpine mini-setting for your next hex crawl campaign!\n"
             + desc_url + "url=" + urllib.parse.quote(text_url) + "\n"
-            + "Learn about the web app and the tables used to generate it all:\n"
+            + "Generated using #hexdescribe:\n"
             + app_url + "\n"
-            + "#hexdescribe #hex #hexcrawl #map #rpg")
+            + "#hex #hexcrawl #map #rpg")
     # abort now if debugging
     if debug:
         print(text)
