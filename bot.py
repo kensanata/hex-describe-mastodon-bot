@@ -22,7 +22,6 @@ import cairosvg
 import random
 import getopt
 import os
-import re
 
 def login(account):
     """
