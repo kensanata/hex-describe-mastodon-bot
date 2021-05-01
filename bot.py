@@ -88,7 +88,7 @@ def main(account, debug=False):
     # upload image
     media = mastodon.media_post(png, mime_type="image/png", description="a hex map")
     # post status
-    mastodon.status_post(text, media_ids=[media.id])
+    mastodon.status_post(text, media_ids=[media.id], visibility="unlisted")
 
 def usage():
     print("Please provide an account name like nick@example.org")
