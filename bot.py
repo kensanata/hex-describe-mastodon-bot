@@ -36,12 +36,12 @@ def login(account):
     mastodon = None
 
     if not os.path.isfile(client_secret):
-        print("Error: you need to create the file '%s'" % client_secret,
+        print(f"Error: you need to create the file '{client_secret}'",
               file=sys.stderr)
         sys.exit(1)
 
     if not os.path.isfile(user_secret):
-        print("Error: you need to create the file '%s'" % user_secret,
+        print(f"Error: you need to create the file '{user_secret}'",
               file=sys.stderr)
         sys.exit(1)
 
@@ -56,30 +56,31 @@ def main(account, debug=False):
     mastodon = login(account)
     seed = random.randint(0, 2**32)
     svg_url = "https://campaignwiki.org/text-mapper/alpine/random?"
-    text_url = "https://campaignwiki.org/text-mapper/alpine/random/text?"
+    map_url = "https://campaignwiki.org/text-mapper/alpine/random/text?"
     app_url = "https://campaignwiki.org/hex-describe"
     desc_url = "https://campaignwiki.org/hex-describe/describe/random/alpine?"
-    args = ["seed=%d" % seed];
+    args = [f"seed={seed}"];
     if random.random() > 0.6:
-        args.append("bottom=%d" % random.randint(1,6))
+        args.append(f"bottom={random.randint(1,6)}")
     if random.random() > 0.6:
-        args.append("peak=%d" % random.randint(7,9))
+        args.append(f"peak={random.randint(7,9)}")
     if random.random() > 0.8:
-        args.append("peaks=%d" % random.randint(1,20))
+        args.append(f"peaks={random.randint(1,20)}")
     if random.random() > 0.8:
-        args.append("steepness=%.1f" % (1 + random.randint(0,50)/10))
+        args.append(f"steepness={1 + random.randint(0,50)/10}")
     svg_url += "&".join(args)
-    text_url += "&".join(args)
+    map_url += "&".join(args)
+    desc_url += f"seed={seed}&url={urllib.parse.quote(map_url)}";
     # download SVG
     svg = urllib.request.urlopen(svg_url).read()
     # convert SVG to PNG
     png = cairosvg.svg2png(bytestring=svg)
     # create the status text
     text = ("Here's a new alpine mini-setting for your next hex crawl campaign!\n"
-            + desc_url + "url=" + urllib.parse.quote(text_url) + "\n"
-            + "Generated using #hexdescribe:\n"
-            + app_url + "\n"
-            + "#hex #hexcrawl #map #rpg")
+            f"{desc_url}\n"
+            "Generated using #hexdescribe:\n"
+            f"{app_url}\n"
+            "#hex #hexcrawl #map #rpg")
     # abort now if debugging
     if debug:
         print(text)
